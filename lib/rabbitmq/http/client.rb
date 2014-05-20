@@ -369,8 +369,8 @@ module RabbitMQ
       def initialize_connection(endpoint, options = {})
         uri     = URI.parse(endpoint)
 
-        user     = uri.user     || options[:username] || "guest"
-        password = uri.password || options[:password] || "guest"
+        user     = uri.user     || options.delete(:username) || "guest"
+        password = uri.password || options.delete(:password) || "guest"
 
         @connection = Faraday.new(options.merge(:url => endpoint)) do |conn|
           conn.basic_auth user, password
